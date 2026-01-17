@@ -1,0 +1,2 @@
+[gateway]
+gha-ansible-poc-gateway ansible_host=TODO

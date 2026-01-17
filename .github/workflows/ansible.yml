@@ -1,0 +1,45 @@
+name: Ansible Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment"
+        required: true
+        default: "poc"
+        type: choice
+        options:
+          - poc
+
+jobs:
+  ansible-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Setup SSH Key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/ssh_key
+          chmod 600 /tmp/ssh_key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Setup Ansible Vault
+        run: |
+          echo "${{ secrets.VAULT_PASSWORD }}" > .vault_pass
+        working-directory: ./ansible
+
+      - name: Install dependencies
+        run: uv sync
+        working-directory: ./ansible
+# WIP
