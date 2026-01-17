@@ -1,0 +1,2 @@
+export TF_VAR_instance_default_root_pass=インスタンスのデフォルトrootパスワード
+export LINODE_TOKEN=LINODE APIのトークン
