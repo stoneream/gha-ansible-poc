@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: stoneream
+  description: A simple role to ping hosts and verify connectivity
+  license: MIT
+  min_ansible_version: "2.20"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - noble # Ubuntu 24.04
+
+dependencies: []

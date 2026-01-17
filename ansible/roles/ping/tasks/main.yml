@@ -1,0 +1,14 @@
+---
+- name: Ping all hosts
+  ansible.builtin.ping:
+  register: ping_result
+
+- name: Display ping results
+  ansible.builtin.debug:
+    msg: "Host {{ inventory_hostname }} is reachable!"
+  when: ping_result is succeeded
+
+- name: Display ping failure
+  ansible.builtin.debug:
+    msg: "Host {{ inventory_hostname }} is not reachable!"
+  when: ping_result is failed
