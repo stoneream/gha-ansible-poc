@@ -3,7 +3,7 @@ terraform {
 }
 
 locals {
-  name   = "gha-terraform-poc"
+  name   = "gha-ansible-poc"
   region = "jp-osa"
 }
 
