@@ -41,19 +41,19 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Setup Ansible Vault
+        working-directory: ./ansible
         run: |
           echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > .vault_pass
-        working-directory: ./ansible
 
       - name: Install dependencies
-        run: uv sync
         working-directory: ./ansible
+        run: uv sync
 
       - name: Run Ansible Playbook
-        run: |
-          chmod +x ./ansible/scripts/ci-deploy.sh
-          ./ansible/scripts/ci-deploy.sh "${{ github.event.inputs.environment }}" "${{ github.event.inputs.playbook }}"
         working-directory: ./ansible
+        run: |
+          chmod +x ./scripts/ci-deploy.sh
+          ./scripts/ci-deploy.sh "${{ github.event.inputs.environment }}" "${{ github.event.inputs.playbook }}"
         env:
           ANSIBLE_PRIVATE_KEY_FILE: /tmp/ssh_key
           ANSIBLE_VAULT_PASSWORD_FILE: ./ansible/.vault_pass
