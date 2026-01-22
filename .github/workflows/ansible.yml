@@ -17,6 +17,7 @@ on:
         type: choice
         options:
           - playbooks/ping.yml
+          - playbooks/add_users.yml
 
 jobs:
   ansible-deploy:

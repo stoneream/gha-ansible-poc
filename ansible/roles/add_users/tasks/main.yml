@@ -1,0 +1,38 @@
+---
+- name: Set timezone to Asia/Tokyo
+  community.general.timezone:
+    name: "Asia/Tokyo"
+  become: True
+
+- name: Add operation user
+  block:
+    - name: Check if user exists
+      ansible.builtin.command: id -u user
+      register: user_exists
+      ignore_errors: True
+    - ansible.builtin.user:
+        name: user
+        shell: /bin/bash
+        password: "{{ user_password | password_hash('sha512') }}"
+        groups: sudo
+        append: yes
+      when: user_exists.rc != 0
+  become: True
+
+- name: SSH Config
+  block:
+    - name: Create SSH Directory
+      ansible.builtin.file:
+        path: /home/user/.ssh
+        state: directory
+        mode: "0700"
+        owner: user
+        group: user
+    - name: Add Authorized key
+      ansible.builtin.copy:
+        src: user.pub
+        dest: /home/user/.ssh/authorized_keys
+        owner: user
+        group: user
+        mode: "0600"
+  become: True
