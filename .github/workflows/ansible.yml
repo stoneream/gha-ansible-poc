@@ -13,10 +13,11 @@ on:
       playbook:
         description: "Playbook to run"
         required: true
-        default: "ping.yml"
+        default: "playbooks/ping.yml"
         type: choice
         options:
-          - ping.yml
+          - playbooks/ping.yml
+
 jobs:
   ansible-deploy:
     runs-on: ubuntu-latest
