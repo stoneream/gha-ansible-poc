@@ -15,8 +15,6 @@ if [[ -z "$ENVIRONMENT" || -z "$PLAYBOOK" ]]; then
   exit 1
 fi
 
-export ANSIBLE_CONFIG="./ansible.cfg"
-
 # シンタックスチェック
 uv run ansible-playbook --syntax-check "$PLAYBOOK" -i "inventory/$ENVIRONMENT"
 
