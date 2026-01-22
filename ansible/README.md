@@ -28,4 +28,10 @@ uv run ansible --version
 #   python version = 3.13.0 (main, Oct 12 2024, 22:36:00) [GCC 11.4.0] (/home/user/ghq/github.com/stoneream/gha-ansible-poc/ansible/.venv/bin/python3)
 #   jinja version = 3.1.6
 #   pyyaml version = 6.0.3 (with libyaml v0.2.5)
+
+# Example: Encrypting/Decrypting Vault file
+
+uv run ansible-vault encrypt inventory/poc/group_vars/all.yml
+
+uv run ansible-vault decrypt inventory/poc/group_vars/all.yml
 ```
