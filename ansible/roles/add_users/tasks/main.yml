@@ -13,7 +13,7 @@
     - ansible.builtin.user:
         name: user
         shell: /bin/bash
-        password: "{{ user_password | password_hash('sha512') }}"
+        password: "{{ operation_user_password | password_hash('sha512') }}"
         groups: sudo
         append: yes
       when: user_exists.rc != 0

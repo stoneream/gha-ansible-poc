@@ -42,10 +42,10 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # - name: Setup Ansible Vault
-      #   working-directory: ./ansible
-      #   run: |
-      #     echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > .vault_pass
+      - name: Setup Ansible Vault
+        working-directory: ./ansible
+        run: |
+          echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > .vault_pass
 
       - name: Install dependencies
         working-directory: ./ansible
@@ -59,4 +59,4 @@ jobs:
         env:
           ANSIBLE_CONFIG: ./ansible.cfg
           ANSIBLE_PRIVATE_KEY_FILE: /tmp/ssh_key
-          # ANSIBLE_VAULT_PASSWORD_FILE: ./.vault_pass
+          ANSIBLE_VAULT_PASSWORD_FILE: ./.vault_pass
