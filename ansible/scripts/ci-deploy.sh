@@ -4,7 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 ENVIRONMENT=${1:-""} # poc
-PLAYBOOK=${2:""} # playbooks/ping.yml
+PLAYBOOK=${2:""} # ping.yml
 
 echo "Environment: $ENVIRONMENT"
 echo "Playbook: $PLAYBOOK"
