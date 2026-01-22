@@ -14,6 +14,10 @@
 ## development
 
 ```bash
+cp .envrc.sample .envrc
+
+direnv allow
+
 uv sync
 
 uv run ansible --version
