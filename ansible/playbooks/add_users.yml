@@ -1,6 +1,6 @@
 ---
 - name: Add operation user playbook
   hosts: all
-  gather_facts: false
+  gather_facts: true
   roles:
     - add_users
