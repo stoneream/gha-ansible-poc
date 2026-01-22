@@ -10,7 +10,13 @@ on:
         type: choice
         options:
           - poc
-
+      playbook:
+        description: "Playbook to run"
+        required: true
+        default: "ping.yml"
+        type: choice
+        options:
+          - ping.yml
 jobs:
   ansible-deploy:
     runs-on: ubuntu-latest
@@ -36,10 +42,18 @@ jobs:
 
       - name: Setup Ansible Vault
         run: |
-          echo "${{ secrets.VAULT_PASSWORD }}" > .vault_pass
+          echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > .vault_pass
         working-directory: ./ansible
 
       - name: Install dependencies
         run: uv sync
         working-directory: ./ansible
-# WIP
+
+      - name: Run Ansible Playbook
+        run: |
+          chmod +x ./ansible/scripts/ci-deploy.sh
+          ./ansible/scripts/ci-deploy.sh "${{ github.event.inputs.environment }}" "${{ github.event.inputs.playbook }}"
+        working-directory: ./ansible
+        env:
+          ANSIBLE_PRIVATE_KEY_FILE: /tmp/ssh_key
+          ANSIBLE_VAULT_PASSWORD_FILE: ./ansible/.vault_pass
