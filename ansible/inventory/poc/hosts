@@ -1,2 +1,2 @@
 [gateway]
-gha-ansible-poc-gateway ansible_host=TODO
+gha-ansible-poc-gateway ansible_host=172.233.81.10
