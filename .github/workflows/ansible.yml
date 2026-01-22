@@ -18,6 +18,7 @@ on:
         options:
           - playbooks/ping.yml
           - playbooks/add_users.yml
+          - playbooks/upgrade_packages.yml
 
 jobs:
   ansible-deploy:

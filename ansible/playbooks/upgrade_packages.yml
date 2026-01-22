@@ -1,0 +1,6 @@
+---
+- name: Upgrade packages playbook
+  hosts: all
+  gather_facts: false
+  roles:
+    - upgrade_packages
