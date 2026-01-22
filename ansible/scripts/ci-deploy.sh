@@ -1,32 +1,28 @@
 #!/bin/bash
 set -euo pipefail
 
-ENVIRONMENT=${1:-poc}
-PLAYBOOK=${2:-playbooks/ping.yml}
-EXTRA_VARS=${3:-""}
+cd "$(dirname "$0")/.."
 
-echo "=== Ansible CI Execution ==="
+ENVIRONMENT=${1:-""} # poc
+PLAYBOOK=${2:""} # playbooks/ping.yml
+
 echo "Environment: $ENVIRONMENT"
 echo "Playbook: $PLAYBOOK"
 echo "Timestamp: $(date)"
 
-# 環境変数の確認
-if [[ -z "${ANSIBLE_VAULT_PASSWORD_FILE:-}" ]] && [[ -z "${VAULT_PASSWORD:-}" ]]; then
-  echo "Warning: No vault password configuration found"
+if [[ -z "$ENVIRONMENT" || -z "$PLAYBOOK" ]]; then
+  echo "Usage: $0 <environment> <playbook>"
+  exit 1
 fi
 
 export ANSIBLE_CONFIG="./ansible.cfg"
 
-# 実行前チェック
-echo "=== Pre-execution checks ==="
+# シンタックスチェック
 uv run ansible-playbook --syntax-check "$PLAYBOOK" -i "inventory/$ENVIRONMENT"
 
-# Dry-run実行
-echo "=== Dry-run execution ==="
+# ドライラン
 uv run ansible-playbook "$PLAYBOOK" -i "inventory/$ENVIRONMENT" --check --diff
 
-# 本実行
-echo "=== Actual execution ==="
+# 実行
 uv run ansible-playbook "$PLAYBOOK" -i "inventory/$ENVIRONMENT"
 
-echo "=== Execution completed ==="
